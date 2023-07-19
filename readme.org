@@ -13,8 +13,7 @@ Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/Gwe
 1. Instead of focusing on the overall niche similarity, we plot optimal temperature to show the ecology change
 2. The temperature of each species' habitat (generally speaking, depth and latitude range) is used instead of global annual mean temperature. 
 
-* Results
-[[file:output/Topt_timeseries.png][Foraminiferal optimal temperature time series]]
+#+html: <p align="center"><img src="output/optimal_niche_driver.jpg" /></p>
 
 * Strucuture
 
