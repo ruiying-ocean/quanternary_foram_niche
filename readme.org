@@ -1,4 +1,5 @@
-#+TITLE: Re-analysis of foraminifera thermal niche in the glacial-interglacial cycle
+#+TITLE: Foraminifera optimal temperature in the glacial-interglacial cycles
+#+html: <p align="center"><img src="path/to/file" /></p>
 
 * About
 This aim of repository is to plot foraminiferal optimal temperature change using Antell et al. (2021) data. It demonstrates that foraminifera optimal niche is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to environmental temperature.
@@ -22,15 +23,10 @@ Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/Gwe
 #+end_src
 
 #+RESULTS:
-#+begin_example
-.
-├── Antel_et_al_2021.Rproj
-├── code
-├── data
-├── output
-├── readme.html
-├── readme.org
-└── ry_reanalysis
-
-5 directories, 3 files
-#+end_example
+: .
+: ├── code
+: ├── data
+: ├── output
+: └── readme.org
+: 
+: 4 directories, 1 file
