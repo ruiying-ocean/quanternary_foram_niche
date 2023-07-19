@@ -23,7 +23,7 @@ for (dgt4i in dgt4){
 }
 mods <- head(mods, length(age))
 modMeta <- data.frame(id=mods, age_1000ka=age)
-write.csv(modMeta, 'Data/gcm_model_codes.csv', row.names=FALSE)
+write.csv(modMeta, 'data/gcm_model_codes.csv', row.names=FALSE)
 
 # bin GCM data every 8-ky
 ageSteps <- seq(4, 800, by = 8)
@@ -82,7 +82,7 @@ for (i in 1:length(idSbset)){
   # Include age in file name or models that differ only in captalization will overwrite
   for (v in vars) {
     vAnn <- ncvar_get(ann, varid=v)
-    expNm <- paste0('Data/gcm_annual_mean/', id, '_', age, '_ann_', v, '.tif')
+    expNm <- paste0('data/gcm_annual_mean/', id, '_', age, '_ann_', v, '.tif')
     if (v=='mixLyrDpth_ym_uo'){
       r <- getRast(mat=vAnn, coords=llGrid, rEmpt=rEmpt, prj=llPrj)
       writeRaster(r, nl=1, filename=expNm, format="GTiff", bylayer=FALSE, overwrite=TRUE)

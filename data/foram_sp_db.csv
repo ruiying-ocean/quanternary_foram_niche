@@ -1,0 +1,60 @@
+Name,Symbiosis,Spinose,Remark
+Dentigloborotalia anfracta,No,No,
+Globorotalia cavernula,No,No,
+Globorotalia crassaformis,No,No,Synonyms: Globorotalia crassula
+Globorotalia crassa,No,No,"another synonym of G. crassaformis, created for avoid duplicate name in sorting out data"
+Globorotalia hirsuta,No,No,Synonyms: Hirsutella hirsuta
+Globorotalia cultrata,Yes,No,Synonym: G. menardii
+Globorotalia menardii,Yes,No,Symbionts facultative
+Globorotalia scitula,No,No,Synonyms: Hirsutella scitula
+Globorotalia truncatulinoides,No,No,Synonyms: Truncorotalia truncatulinoides
+Globorotalia tumida,No,No,
+Globorotalia ungulata,No,No,
+Globorotalia theyeri,No,No,
+Globoconella inflata,Yes,No,Synonyms: Globorotalia inflata; Symbionts facultative
+Globorotalia inflata,Yes,No,Symbionts facultative
+Neogloboquadrina dutertrei,Yes,No,Symbionts facultative
+Neogloboquadrina incompta,No,No,Neogloboquadrina pachyderma (right)
+Neogloboquadrina pachyderma,No,No,Neogloboquadrina pachyderma (left)
+Pulleniatina obliquiloculata,Yes,No,Symbionts facultative
+Globoquadrina conglomerata,No,No,
+Globorotaloides hexagonus,No,No,
+Berggrenia pumilio,No,No,
+Globigerina bulloides,No,Yes,Symbiont-barren but spinose
+Globigerina falconensis,Yes,Yes,
+Globigerinoides conglobatus,Yes,Yes,
+Globigerinoides ruber ruber,Yes,Yes,
+Globigerinoides ruber albus,Yes,Yes,
+Globigerinoides ruber,Yes,Yes,
+Trilobatus sacculifer,Yes,Yes,Synonyms: Globigerinoides sacculifer
+Globigerinoides tenellus,No,Yes,"spinose without symbionts (Aze et al., 2011); closely related to G. elongatus and G. conglobatus, (Morard et al., 2019)"
+Globigerinoides elongatus,Yes,Yes,Synonyms: Globigerinoides sacculifer
+Orbulina universa,Yes,Yes,
+Beella digitata,Yes,Yes,"not sure as subthermocline, Coxall et al 2007"
+Globigerinella siphonifera,Yes,Yes,Synonyms: Globigerina aequilateralis
+Globigerinella calida,Yes,Yes,
+Globigerinella adamsi,Yes,Yes,
+Turborotalita quinqueloba,No,No,
+Turborotalita humilis,Yes,Yes,
+Globoturborotalita rubescens,Yes,Yes,
+Sphaeroidinella dehiscens,Yes,Yes,
+Candeina nitida,Yes,No,Symbionts facultative
+Globigerinita glutinata,Yes,No,Symbionts facultative
+Globigerinita uvula,Yes,No,"Symbionts facultative; Takagi et al., 2019, 2020"
+Globigerinita minuta,No,No,
+Tenuitella iota,No,No,
+Hastigerina pelagica,No,Yes,Symbiont-barren but spinose
+Hastigerinella digitata,No,Yes,sister species of H.pelagica; symbiosis sees Takagi et al. (2019)
+Globigerinella aequilateralis,Yes,Yes,Synonyms: Globigerinella siphonifera
+Globigerina calida,Yes,Yes,Synonyms: Globigerinella calida
+Globoturborotalita tenella,Yes,Yes,Synonyms: Globigerinoides tenellus; Ancestor: G. rubescens
+Streptochilus globigerus,Undetermined,Undetermined,"very rare, we do not know much about this one"
+Tenuitella compressa,Undetermined,Undetermined,Synonyms: Tenuitella fleisheri (synonyms under discussion )
+Tenuitella fleisheri,Undetermined,Undetermined,Synonyms: Tenuitella compressa
+Tenuitella parkerae,Undetermined,Undetermined,The group is understudied
+Turborotalita clarkei,Undetermined,Yes,
+Globigerinella digitata,Undetermined,Undetermined,Synonyms: Beella digitata
+Globigerinella radians,Yes,Yes,very close to G.siphonifera
+Orcadia riedeli,Undetermined,Undetermined,"Rare species, Schiebel et al., 2017, 10.1016/j.marmicro.2017.08.004"
+Globorotalia flexuosa,No,No,synonyms: Globorotalia tumida flexuosa
+Globigerinella clavaticamerata,Undetermined,Yes,"Globigerinoides trilobus trilobus, lower Miocene"

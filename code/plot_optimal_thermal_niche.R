@@ -175,7 +175,7 @@ niche_hab_subset <- niche_hab_subset %>% arrange(sp, bin)
 niche_correlation <- niche_hab_subset %>% group_by(sp) %>% mutate(delta_pe= pe- lag(pe,n=1,order_by=sp),
                                              delta_temp = opt_ym_temp-lag(opt_ym_temp,n=1,order_by=sp))
 
-symbiosis_tbl <- read_csv("~/foram_core/fg/foram_sp_db.csv") %>% 
+symbiosis_tbl <- read_csv("data/foram_sp_db.csv") %>% 
   mutate(sp = map_vec(Name, species_abbrev)) %>% mutate(fg=case_when(
     Symbiosis=="No" & Spinose == "No"~"Symbiont-barren Non-Spinose",
     Symbiosis=="Yes" & Spinose == "Yes"~"Symbiont-obligate Spinose",
@@ -200,10 +200,7 @@ p <- p + theme(text = element_text(size = 16),
   scale_fill_viridis_b(name = "Age (ka)")
 
 ggsave("output/optimal_niche_driver.jpg", dpi = 300, width=6, height = 5)
-saveRDS(niche_correlation, "data/Antell_realaysis.RDS")
-
-
-
+saveRDS(niche_correlation, "data/RY_realaysis.RDS")
 
 ##### plot time series, bin -> age, pe -> optimal temperature
 niche_hab %>% 
@@ -216,87 +213,4 @@ niche_hab %>%
   theme(strip.background = element_blank(),
         strip.text = element_text(face = "italic"))
 
-ggsave("output/Antell_Topt_timeseries.png", dpi=400, width = 7, height = 5)
-
-  ##### get correlation p-value
-p_values <- niche_hab %>%
-  group_by(sp) %>%
-  summarise(regression_tbl = list(tidy(lm(pe ~ opt_ym_temp)))) %>%
-  unnest(regression_tbl) %>%
-  filter(term != "(Intercept)") %>%
-  select(sp, p.value)
-
-# Merge the p_values with niche_hab
-niche_hab <- merge(niche_hab, p_values, by = c("sp"), all.x = TRUE)
-
-# Set a threshold for significance level (e.g., 0.05)
-significance_threshold <- 0.05
-
-# Create a new column indicating whether the p-value is significant or not
-niche_hab <- niche_hab %>%
-  mutate(significant = ifelse(p.value <= significance_threshold, "Significant", "Not Significant"))
-
-# Plot the regression lines
-niche_hab %>% left_join(mat) %>%
-  ggplot(aes(x =opt_ym_temp , y = pe, color = significant)) +
-  geom_point() +
-  facet_wrap(~ sp) +
-  scale_color_manual(values = c("Significant" = "black", "Not Significant" = "gray"))+
-    labs(title = "Regression Significance", x = "Global mean temperature on habitat depth (°C)",
-       y = "Species optimal temperature  (°C)", color="")
-
-ggsave("output/Antell_Topt_regression.png", dpi=400, width = 12, height = 10)
-
-#### plot optimal temperature boxplot
-min_count <- 0
-
-optimal_niche <- niche_hab %>% filter(n1 > min_count) %>%
-  group_by(sp) %>%
-  summarize(mean_m = mean(pe),
-            lower = min(pe),
-            upper = max(pe)) %>%
-  mutate(sp = reorder(sp, mean_m))
-  
-## add LGM and Holocene
-## source("themarl_fitness")
-## thermal_opt(obs_sp_smooth)
-rui_opt_temp <- tibble(
-  sp = c("G. truncatulinoides", "G. inflata", "N. dutertrei", "N. incompta", "N. pachyderma", "P. obliquiloculata", "G. bulloides", "G. ruber ruber", "G. ruber albus", "T. sacculifer", "T. quinqueloba", "G. glutinata"),
-  PI = c(19.1, 20.5, 25.0, 14.6, -1.79, 29.2, 10.0, 25.8, 29.2, 27.5, 3.31, 29.2),
-  LGM = c(17.0, 13.7, 20.3, 13.8, -1.76, 26.2, 4.69, 22.3, 20.8, 23.2, -0.576, 26.2),
-)
-
-rui_opt_temp_long <- rui_opt_temp %>%
-  gather(key = "Age", value = "Temperature", -sp) %>%  group_by(sp) %>%
-  mutate(lower=min(Temperature), upper=max(Temperature), mean_m = mean(Temperature))
-
-ggplot() +
-  geom_pointrange(data = optimal_niche, aes(x = sp, y = mean_m, ymin = lower, ymax = upper), color = "grey70") +
-  geom_pointrange(data = rui_opt_temp_long, aes(x = sp, y = mean_m, ymin = lower, ymax = upper), color = "black") +
-  annotate("text", x = 3, y = 30, label = "Antell et al. (2021) data", color = "grey70", size = 4) +
-  annotate("text", x = 3, y = 28, label = "Our study", color = "black", size = 4) +
-  guides(color = "none") +
-  labs(x = "", y = "Species optimal temperature (°C)") +
-  theme(axis.text.x = element_text(angle = 40, vjust = 1, hjust = 1))
-
-ggsave("output/Antel_Topt.png", dpi=400,  width = 10, height = 6)
-
-## species maximum thermal traits
-## assuming a normal distributin, the 95% upper CI is
-## mean + z_score (1.96) * sd
-max_niche <- niche_hab %>%
-  mutate(max_temp = m + 1.96*sd) %>%
-  filter(n1 > min_count) %>%
-  group_by(sp) %>%
-  summarize(mean_max = mean(max_temp),
-            lower_max = min(max_temp),
-            upper_max = max(max_temp))
-
-ggplot() +
-  geom_pointrange(data = max_niche, aes(x = sp, y = mean_max, ymin = lower_max, ymax = upper_max), color = "grey70") +
-#  annotate("text", x = 3, y = 30, label = "Antell et al. (2021) data", color = "grey70", size = 4) +
-#  annotate("text", x = 3, y = 28, label = "Our study", color = "black", size = 4) +
-  guides(color = "none") +
-  labs(x = "", y = "Species maximum temperature (°C)") +
-  theme(axis.text.x = element_text(angle = 40, vjust = 1, hjust = 1))
-
+ggsave("output/Topt_timeseries.png", dpi=400, width = 7, height = 5)
