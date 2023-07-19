@@ -1,6 +1,7 @@
 #+TITLE: Foraminifera optimal temperature in the glacial-interglacial cycles
-#+html: <p align="center"><img src="output/Topt_timeseries.png" /></p>
 [[https://www.gnu.org/licenses/gpl-3.0][https://img.shields.io/badge/License-GPL%20v3-blue.svg]]
+
+#+html: <p align="center"><img src="output/Topt_timeseries.png" /></p>
 
 * About
 This aim of repository is to plot foraminiferal optimal temperature change using Antell et al. (2021) data. It demonstrates that foraminifera optimal niche is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to environmental temperature.
