@@ -175,31 +175,20 @@ niche_hab_subset <- niche_hab_subset %>% arrange(sp, bin)
 niche_correlation <- niche_hab_subset %>% group_by(sp) %>% mutate(delta_pe= pe- lag(pe,n=1,order_by=sp),
                                              delta_temp = opt_ym_temp-lag(opt_ym_temp,n=1,order_by=sp))
 
-symbiosis_tbl <- read_csv("data/foram_sp_db.csv") %>% 
-  mutate(sp = map_vec(Name, species_abbrev)) %>% mutate(fg=case_when(
-    Symbiosis=="No" & Spinose == "No"~"Symbiont-barren Non-Spinose",
-    Symbiosis=="Yes" & Spinose == "Yes"~"Symbiont-obligate Spinose",
-    Symbiosis=="No" & Spinose == "Yes"~"Symbiont-barren Spinose",
-    Symbiosis=="Yes" & Spinose == "No"~"Symbiont-facultative Spinose",
-  ))
+symbiosis_tbl <- read_csv("~/Science/lgm_foram_census/fg/foram_sp_db.csv") %>%
+    mutate(sp = map_vec(Name, species_abbrev))  %>% select(sp, Symbiosis, Spinose)
+
 niche_correlation <- merge(niche_correlation,symbiosis_tbl, by="sp")
 
-## small proportion of variance explained but significant
-p <- ggscatter(niche_correlation, x = "delta_temp", y = "delta_pe",
-          fill = "bin", shape = 21, size = 4, # Points color, shape and size
-          add = "reg.line",  # Add regressin line
-          add.params = list(color = "black", fill = "lightgray"), # Customize reg. line
-          conf.int = TRUE, # Add confidence interval
-          cor.coef = TRUE, # Add correlation coefficient. see ?stat_cor
-          cor.coeff.args = list(method = "pearson", label.x=1, label.sep = "\n"),
-          xlab = "Δ Ocean Temperature (°C)", ylab = "Δ Foraminiferal Optimal Temperature (°C)",
-)
+aov(data=niche_correlation, delta_pe ~ Symbiosis+Spinose) %>% summary() ## Not significantly different by traits
 
-p <- p + theme(text = element_text(size = 16),
-          legend.position = c(0.9, 0.2))+
-  scale_fill_viridis_b(name = "Age (ka)")
+## linear regression model
+lm(data=niche_correlation, delta_pe ~ delta_temp) %>% summary()
+lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis) %>% summary()
+lm(data=niche_correlation, delta_pe ~ delta_temp+Spinose) %>% summary()
+lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis+Spinose) %>% summary()
+lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis*delta_temp+Spinose*delta_temp) %>% summary() ## best model, suggest combined effect of symbiosis and temperature change
 
-ggsave("output/optimal_niche_driver.jpg", dpi = 300, width=6, height = 5)
 saveRDS(niche_correlation, "data/RY_realaysis.RDS")
 
 ##### plot time series, bin -> age, pe -> optimal temperature
