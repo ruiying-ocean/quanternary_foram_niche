@@ -7,7 +7,7 @@
 This aim of repository is to plot foraminiferal optimal temperature change using Antell et al. (2021) data. It demonstrates that foraminifera optimal niche is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to environmental temperature.
 Figures in this repository are contained in my manuscript in submission.
 
-+ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., & Schmidt, D. N. (2023). in submission
++ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., & Schmidt, D. N. (2023). Thermal niche evolution of marine plankton from past to future. in submission
 
 * Original study
 Gwen S. Antell, Isabel S. Fenton, Paul J. Valdes, and Erin E. Saupe (2021). "Thermal niches of planktonic foraminifera are static throughout glacial–interglacial climate change." _Proceedings of the National Academy of Sciences_, 118 (DOI:10.1073/pnas.2017105118).
