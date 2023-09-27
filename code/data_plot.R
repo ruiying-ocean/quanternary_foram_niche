@@ -62,13 +62,14 @@ p2 <- ggscatter(niche_correlation, x = "delta_temp", y = "delta_pe",
                 conf.int = TRUE,
                 cor.coef = TRUE,
                 cor.coeff.args = list(method = "pearson", label.x = 1, label.sep = "\n"),
-                xlab = "Δ Ocean Temperature (°C)", ylab = "Δ Foraminiferal Optimal Temperature (°C)")
+                xlab = "Δ Habitat ocean temperature (°C)", ylab = "Δ Foraminiferal optimal temperature (°C)")
 
-p2 <- p2 + theme(legend.position = c(0.9, 0.25)) +
-  scale_fill_viridis_b(name = "Age (ka)")
+p2 <- p2 +  scale_fill_viridis_b(name = "Age (ka)") +
+  theme(legend.position = "right")
+p2
 ## p2 <- p2+ scale_fill_gradientn(colors = scales::brewer_pal(palette = "YlGnBu")(6))
 # Arrange plots side by side
 plot_arranged <- ggarrange(p1, p2, ncol = 2, labels = c("a", "b"))
-
+plot_arranged
 # Save the plot to a file
 ggsave("output/fig3.jpg", plot_arranged, dpi = 300, width = 10, height = 4)
