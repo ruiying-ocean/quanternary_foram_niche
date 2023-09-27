@@ -3,6 +3,7 @@ library(ggpubr)
 library(showtext)
 library(broom)
 
+
 ## change species name
 ## Add a abbreviation column
 species_abbrev <- function(full_name, sep_string = ". ") {
@@ -23,6 +24,8 @@ species_abbrev <- function(full_name, sep_string = ". ") {
   return(abbrev)
 }
 
+## instead of calculate global temperature change
+## I subset the data by latitudinal bands
 subset_mat <- function(age, depth, lat) {
   col <- paste("temp_ym", depth, lat, sep = "_")
   
@@ -94,13 +97,17 @@ mat_total <- mat %>%
   left_join(mat_hl, by = "bin") %>%
   left_join(mat_ml, by = "bin")
 
+## Example to use
+## e.g., global surface temperature at 4 ka
+## or mid/low latitude temperature
 subset_mat(4, "surf","gl")
 subset_mat(4, "surf","ml_ll")
 
+
+## update the species name for consistency
 ## use short name
 niche_hab$sp <- map_vec(niche_hab$sp, species_abbrev)
 
-## update the species name first
 niche_hab <- niche_hab %>%
   mutate(sp = recode(sp, "M. menardii" = "G. menardii",
                      "T. truncatulinoides" = "G. truncatulinoides",
@@ -108,6 +115,7 @@ niche_hab <- niche_hab %>%
                      "H. scitula" = "G. scitula",
                      "H. hirsuta" = "G. hirsuta"))
 
+## Link species to their depth habitat
 ## species depth ecology from Rebotim et al. (2017) Biogeosciences
 living_depth <- read_csv("data/Rebotim2017.csv") %>%
   rename(sp=Species, ald=`average living depth (m)`) %>%
@@ -121,6 +129,7 @@ living_depth <-  living_depth %>%
                      "G. ruber white" = "G. ruber albus")) %>% distinct()
 
 ## fill missing data using Ralf Schiebel & Christoph Hemleben (2017) book
+## 50/200 are just arbitrary values to match the category (surface/subsurface)
 living_depth <- living_depth %>%
   mutate(
     ald = case_when(
@@ -167,8 +176,9 @@ niche_hab <- niche_hab %>% left_join(sp_lat, by="sp")
 niche_hab <- niche_hab %>% rowwise() %>%
   mutate(opt_ym_temp = subset_mat(age = bin,  depth = temp_ym_hab,lat = hab_lat))
 
-min_count <- 20
 
+## filter out insufficient sample for the KDE estimate (n < 20 for univariate KDE)
+min_count <- 20
 niche_hab_subset <- niche_hab %>% filter(n1 > min_count)
 
 niche_hab_subset <- niche_hab_subset %>% arrange(sp, bin)
@@ -184,11 +194,6 @@ aov(data=niche_correlation, delta_pe ~ Symbiosis+Spinose) %>% summary() ## Not s
 
 ## linear regression model
 lm(data=niche_correlation, delta_pe ~ delta_temp) %>% summary()
-lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis) %>% summary()
-lm(data=niche_correlation, delta_pe ~ delta_temp+Spinose) %>% summary()
-lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis+Spinose) %>% summary()
-lm(data=niche_correlation, delta_pe ~ delta_temp+Symbiosis*delta_temp+Spinose*delta_temp) %>% summary() ## best model, suggest combined effect of symbiosis and temperature change
-
 saveRDS(niche_correlation, "data/RY_realaysis.RDS")
 
 ##### plot time series, bin -> age, pe -> optimal temperature
