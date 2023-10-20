@@ -1,8 +1,8 @@
-#+TITLE: Foraminifera optimal temperature in the glacial-interglacial cycles
+#+TITLE: Optimal temperatures of planktic foraminifera in the glacial-interglacial cycles
 [[https://www.gnu.org/licenses/gpl-3.0][https://img.shields.io/badge/License-GPL%20v3-blue.svg]]
 
 * About
-This aim of repository is to reanalyse Antell et al. (2021) data, mostly foraminiferal optimal temperature. It demonstrates that foraminifera optimal temperature is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to temperature change.
+This repository is to reanalyse Antell et al. (2021) data, mostly foraminiferal optimal temperature. The reanalysed data is used to demonstrates that foraminifera optimal temperature is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to temperature change.
 
 + Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., and Schmidt, D. N.: Marine zooplankton acclimated to geological warming but facing limits by the next century, EarthArxiv (preprint), https://doi.org/10.31223/X5D10G, 2023.
 
