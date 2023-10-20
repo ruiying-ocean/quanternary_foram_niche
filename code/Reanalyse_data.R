@@ -3,7 +3,6 @@ library(ggpubr)
 library(showtext)
 library(broom)
 
-
 ## change species name
 ## Add a abbreviation column
 species_abbrev <- function(full_name, sep_string = ". ") {
@@ -177,7 +176,6 @@ niche_hab <- niche_hab %>% left_join(sp_lat, by="sp")
 niche_hab <- niche_hab %>% rowwise() %>%
   mutate(opt_ym_temp = subset_mat(age = bin,  depth = temp_ym_hab,lat = hab_lat))
 
-
 ## filter out insufficient sample for the KDE estimate (n < 20 for univariate KDE)
 min_count <- 20
 niche_hab_subset <- niche_hab %>% filter(n1 > min_count)
@@ -191,12 +189,11 @@ symbiosis_tbl <- read_csv("~/Science/lgm_foram_census/fg/foram_sp_db.csv") %>%
 
 niche_correlation <- merge(niche_correlation,symbiosis_tbl, by="sp")
 
-aov(data=niche_correlation, delta_pe ~ Symbiosis+Spinose) %>% summary() ## Not significantly different by traits
-
 ## linear regression model
 lm(data=niche_correlation, delta_pe ~ delta_temp) %>% summary()
 saveRDS(niche_correlation, "data/RY_realaysis.RDS")
 
+## Plot Fig. S8
 ##### plot time series, bin -> age, pe -> optimal temperature
 niche_hab %>% 
   ggplot() + geom_line(aes(x=bin,y=pe,color=sp)) +
@@ -208,4 +205,5 @@ niche_hab %>%
   theme(strip.background = element_blank(),
         strip.text = element_text(face = "italic"))
 
-ggsave("output/Topt_timeseries.png", dpi=400, width = 7, height = 5)
+ggsave("output/figs8.png", dpi=400, width = 7, height = 5)
+

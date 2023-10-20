@@ -5,6 +5,8 @@ library(tidyverse)
 library(vegan)
 library(ggpubr)
 
+niche_correlation <- readRDS("data/RY_realaysis.RDS")
+
 # Set seed for reproducibility
 set.seed(88)
 
@@ -57,7 +59,6 @@ p1 <- p1 + geom_text(aes(x = 7, y = 0.1, label = sprintf("Hellinger distance = %
   xlab("Sea surface temperature (°C)") + ylab("Probability")
 
 # plot2
-niche_correlation <- readRDS("data/RY_realaysis.RDS")
 ## basic statistics
 summary(niche_correlation$delta_pe)
 

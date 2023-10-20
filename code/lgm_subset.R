@@ -1,3 +1,5 @@
+## This script plots Fig. S9 of Ying et al. (2023)
+
 library(tidyverse)
 niche_data <- readRDS("data/RY_realaysis.RDS")
 
