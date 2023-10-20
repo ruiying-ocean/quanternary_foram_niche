@@ -7,9 +7,9 @@ This aim of repository is to reanalyse Antell et al. (2021) data, mostly foramin
 + Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., and Schmidt, D. N.: Marine zooplankton acclimated to geological warming but facing limits by the next century, EarthArxiv (preprint), https://doi.org/10.31223/X5D10G, 2023.
 
 * Original study
-Gwen S. Antell, Isabel S. Fenton, Paul J. Valdes, and Erin E. Saupe (2021). "Thermal niches of planktonic foraminifera are static throughout glacial–interglacial climate change." _Proceedings of the National Academy of Sciences_, 118 (DOI:10.1073/pnas.2017105118).
+Gawain S. Antell, Isabel S. Fenton, Paul J. Valdes, and Erin E. Saupe (2021). "Thermal niches of planktonic foraminifera are static throughout glacial–interglacial climate change." _Proceedings of the National Academy of Sciences_, 118 (DOI:10.1073/pnas.2017105118).
 
-Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/GwenAntell/ForamNiches]].
+Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/GawainAntell/ForamNiches]].
 
 * Difference
 1. We plot optimal temperature to show the ecology change, instead of focusing on the overall niche similarity
