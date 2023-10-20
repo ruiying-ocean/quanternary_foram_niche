@@ -1,13 +1,11 @@
 #+TITLE: Foraminifera optimal temperature in the glacial-interglacial cycles
 [[https://www.gnu.org/licenses/gpl-3.0][https://img.shields.io/badge/License-GPL%20v3-blue.svg]]
 
-#+html: <p align="center"><img src="output/Topt_timeseries.png" /></p>
-
 * About
 This aim of repository is to plot foraminiferal optimal temperature change using Antell et al. (2021) data. It demonstrates that foraminifera optimal niche is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to environmental temperature.
 Figures in this repository are contained in my new manuscript.
 
-+ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., and Schmidt, D. N.: Marine zooplankton acclimated to geological warming while facing limits by the next century, EarthArxiv (preprint), https://doi.org/10.31223/X5D10G, 2023.
++ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., and Schmidt, D. N.: Marine zooplankton acclimated to geological warming but facing limits by the next century, EarthArxiv (preprint), https://doi.org/10.31223/X5D10G, 2023.
 
 * Original study
 Gwen S. Antell, Isabel S. Fenton, Paul J. Valdes, and Erin E. Saupe (2021). "Thermal niches of planktonic foraminifera are static throughout glacial–interglacial climate change." _Proceedings of the National Academy of Sciences_, 118 (DOI:10.1073/pnas.2017105118).
@@ -18,24 +16,42 @@ Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/Gwe
 1. We plot optimal temperature to show the ecology change, instead of focusing on the overall niche similarity
 2. We use the habitat temperature change instead of global mean temperature in asessing climatic effects. 
 
-#+html: <p align="center"><img src="output/optimal_niche_driver.jpg" /></p>
-
 * Strucuture
 
 #+begin_src bash :results output :exports both
-  tree -L 1 .
+  tree -L 2 .
 #+end_src
 
 #+RESULTS:
-: .
-: ├── LICENSE
-: ├── code
-: ├── data
-: ├── output
-: ├── quanternary_foram_niche.Rproj
-: └── readme.org
-: 
-: 4 directories, 3 files
+#+begin_example
+.
+├── LICENSE
+├── code
+│   ├── BRIDGE_GCM_data_prep.R (original script to get HadCM3L data)
+│   ├── Plot_renalysed_data.R (used to plot Fig.3)
+│   ├── Reanalyse_data.R (used to reanalyse data)
+│   ├── LGM_subset.R (used to plot Fig.S9)
+│   └── raster_brick_import_fcn.R (code used in `BRIGE_GCM_data_prep.R`)
+├── data
+│   ├── RY_realaysis.RDS
+│   ├── Rebotim2017.csv
+│   ├── foram_sp_db.csv
+│   ├── gcm_annual_mean
+│   ├── gcm_model_codes.csv
+│   ├── global-MAT_10-deg-grid_8ka.csv
+│   ├── global-MAT_10-deg-grid_8ka_hl.csv
+│   ├── global-MAT_10-deg-grid_8ka_ll.csv
+│   ├── global-MAT_10-deg-grid_8ka_ml.csv
+│   └── niche-sumry-metrics_SJ-ste_hab_2020-11-15.csv
+├── output
+│   ├── fig3.jpg
+│   ├── figs8.png
+│   └── figs9.png
+├── quanternary_foram_niche.Rproj
+└── readme.org
+
+5 directories, 20 files
+#+end_example
 
 
 
