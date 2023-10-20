@@ -1,11 +1,15 @@
-# Load required libraries
+## This script plots Fig. 3 of Ying et al. (2023)
+
+## Load required libraries
 library(tidyverse)
 library(vegan)
 library(ggpubr)
 
 # Set seed for reproducibility
 set.seed(88)
-# Create the data frame
+
+## Create a idealised data frame
+## age: x/y; sst: Norm(10, 5), Norm(11, 5) 
 df <- data.frame(
   age = factor(rep(c("x", "y"), each = 1000)),
   sst = c(rnorm(1000, 10, sd=5), rnorm(1000, 11, sd=5))
@@ -23,7 +27,7 @@ dy <- density(y)
 mean_x <- mean(x)
 mean_y <- mean(y)
 
-# Hellinger distance
+# Hellinger distance as Antell et al. (2021) PNAS
 h <- vegdist(rbind(dx$y, dy$y), method = "hellinger")
 
 # Set the global theme for text properties
@@ -54,6 +58,8 @@ p1 <- p1 + geom_text(aes(x = 7, y = 0.1, label = sprintf("Hellinger distance = %
 
 # plot2
 niche_correlation <- readRDS("data/RY_realaysis.RDS")
+## basic statistics
+summary(niche_correlation$delta_pe)
 
 p2 <- ggscatter(niche_correlation, x = "delta_temp", y = "delta_pe",
                 fill = "bin", shape = 21, size = 4,
@@ -66,10 +72,11 @@ p2 <- ggscatter(niche_correlation, x = "delta_temp", y = "delta_pe",
 
 p2 <- p2 +  scale_fill_viridis_b(name = "Age (ka)") +
   theme(legend.position = "right")
-p2
+
 ## p2 <- p2+ scale_fill_gradientn(colors = scales::brewer_pal(palette = "YlGnBu")(6))
 # Arrange plots side by side
 plot_arranged <- ggarrange(p1, p2, ncol = 2, labels = c("a", "b"))
-plot_arranged
-# Save the plot to a file
-ggsave("output/fig3.jpg", plot_arranged, dpi = 300, width = 10, height = 4)
+
+## Save the plot to a file
+## only save the second plot as the referee's suggestion
+ggsave("output/fig3.jpg", p2, dpi = 300, width = 5, height = 4)

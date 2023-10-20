@@ -173,6 +173,7 @@ sp_lat <- data.frame(sp=c("B. digitata", "G. bulloides", "G. falconensis", "G. c
 
 niche_hab <- niche_hab %>% left_join(sp_lat, by="sp")
 
+## opt_ym_temp is the habitat temperature for the species
 niche_hab <- niche_hab %>% rowwise() %>%
   mutate(opt_ym_temp = subset_mat(age = bin,  depth = temp_ym_hab,lat = hab_lat))
 

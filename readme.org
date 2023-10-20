@@ -5,18 +5,18 @@
 
 * About
 This aim of repository is to plot foraminiferal optimal temperature change using Antell et al. (2021) data. It demonstrates that foraminifera optimal niche is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to environmental temperature.
-Figures in this repository are contained in my manuscript in submission.
+Figures in this repository are contained in my new manuscript.
 
-+ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., & Schmidt, D. N. (2023). Thermal niche evolution of marine plankton from past to future. in submission
++ Publication citation: Ying, R., Monteiro, F. M., Wilson, J. D., and Schmidt, D. N.: Marine zooplankton acclimated to geological warming while facing limits by the next century, EarthArxiv (preprint), https://doi.org/10.31223/X5D10G, 2023.
 
 * Original study
 Gwen S. Antell, Isabel S. Fenton, Paul J. Valdes, and Erin E. Saupe (2021). "Thermal niches of planktonic foraminifera are static throughout glacial–interglacial climate change." _Proceedings of the National Academy of Sciences_, 118 (DOI:10.1073/pnas.2017105118).
 
 Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/GwenAntell/ForamNiches]].
 
-* Modification
-1. Instead of focusing on the overall niche similarity, we plot optimal temperature to show the ecology change
-2. The temperature of each species' habitat (generally speaking, depth and latitude range) is used instead of global annual mean temperature. 
+* What this project does
+1. We plot optimal temperature to show the ecology change, instead of focusing on the overall niche similarity
+2. We use the habitat temperature change instead of global mean temperature in asessing climatic effects. 
 
 #+html: <p align="center"><img src="output/optimal_niche_driver.jpg" /></p>
 
@@ -28,12 +28,16 @@ Github repo: [[https://github.com/GwenAntell/ForamNiches][https://github.com/Gwe
 
 #+RESULTS:
 : .
+: ├── LICENSE
 : ├── code
 : ├── data
 : ├── output
+: ├── quanternary_foram_niche.Rproj
 : └── readme.org
 : 
-: 4 directories, 1 file
+: 4 directories, 3 files
+
+
 
 * License
 This project is under the license of GPLv3 as the original repo.
