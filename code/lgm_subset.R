@@ -36,6 +36,6 @@ p <- p + geom_text(data = lgm_niche %>% distinct(sp, hol_minus_lgm) %>% drop_na(
               aes(x=1.5,y = 0.5,
                   label = paste0("Δopt=", round(hol_minus_lgm, 1), "°C"),
                   size = 1, vjust = 0))
-p
+
 ## save fig
 ggsave("output/lgm_niche.png", p, width = 8, height = 5, units = "in", dpi = 300)

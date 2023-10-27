@@ -25,6 +25,12 @@ species_abbrev <- function(full_name, sep_string = ". ") {
 
 ## instead of calculate global temperature change
 ## I subset the data by latitudinal bands
+## Example to use
+## e.g., global surface temperature at 4 ka
+## or mid/low latitude temperature
+## >>> subset_mat(4, "surf","gl")
+## >>> subset_mat(4, "surf","ml_ll")
+
 subset_mat <- function(age, depth, lat) {
   col <- paste("temp_ym", depth, lat, sep = "_")
   
@@ -51,17 +57,6 @@ subset_mat <- function(age, depth, lat) {
   }
 }
 
-# Set the global theme for text properties
-theme_set(
-  theme_bw() +
-    theme(
-      text = element_text(
-        family = "Roboto",    # Font family
-        size = 15             # Font size
-      )
-    )
-)
-
 ## foram niche over habitat depth
 niche_hab <- read_csv("data/niche-sumry-metrics_SJ-ste_hab_2020-11-15.csv")
 
@@ -73,35 +68,32 @@ mat    <- read_csv("data/global-MAT_10-deg-grid_8ka.csv")%>%
          temp_ym_surfsub_gl = temp_ym_surfsub,
          temp_ym_sub_gl = temp_ym_sub)
 
+## low latitude
 mat_ll <- read_csv("data/global-MAT_10-deg-grid_8ka_ll.csv") %>% 
   rename(temp_ym_0m_ll = temp_ym_0m,
          temp_ym_surf_ll = temp_ym_surf,
          temp_ym_surfsub_ll = temp_ym_surfsub,
          temp_ym_sub_ll = temp_ym_sub)
 
+## high latitude
 mat_hl <- read_csv("data/global-MAT_10-deg-grid_8ka_hl.csv") %>% 
   rename(temp_ym_0m_hl = temp_ym_0m,
          temp_ym_surf_hl = temp_ym_surf,
          temp_ym_surfsub_hl = temp_ym_surfsub,
          temp_ym_sub_hl = temp_ym_sub)
 
+## mid latitude
 mat_ml <- read_csv("data/global-MAT_10-deg-grid_8ka_ml.csv") %>% 
   rename(temp_ym_0m_ml = temp_ym_0m,
          temp_ym_surf_ml = temp_ym_surf,
          temp_ym_surfsub_ml = temp_ym_surfsub,
          temp_ym_sub_ml = temp_ym_sub)
 
+## combine all data
 mat_total <- mat %>%
   left_join(mat_ll, by = "bin")%>%
   left_join(mat_hl, by = "bin") %>%
   left_join(mat_ml, by = "bin")
-
-## Example to use
-## e.g., global surface temperature at 4 ka
-## or mid/low latitude temperature
-subset_mat(4, "surf","gl")
-subset_mat(4, "surf","ml_ll")
-
 
 ## update the species name for consistency
 ## use short name
@@ -128,7 +120,7 @@ living_depth <-  living_depth %>%
                      "G. ruber white" = "G. ruber albus")) %>% distinct()
 
 ## fill missing data using Ralf Schiebel & Christoph Hemleben (2017) book
-## 50/200 are just arbitrary values to match the category (surface/subsurface)
+## 50/200 are just arbitrary values to match the surface/subsurface categories
 living_depth <- living_depth %>%
   mutate(
     ald = case_when(
@@ -176,34 +168,5 @@ niche_hab <- niche_hab %>% left_join(sp_lat, by="sp")
 niche_hab <- niche_hab %>% rowwise() %>%
   mutate(opt_ym_temp = subset_mat(age = bin,  depth = temp_ym_hab,lat = hab_lat))
 
-## filter out insufficient sample for the KDE estimate (n < 20 for univariate KDE)
-min_count <- 20
-niche_hab_subset <- niche_hab %>% filter(n1 > min_count)
-
-niche_hab_subset <- niche_hab_subset %>% arrange(sp, bin)
-niche_correlation <- niche_hab_subset %>% group_by(sp) %>% mutate(delta_pe= pe- lag(pe,n=1,order_by=sp),
-                                             delta_temp = opt_ym_temp-lag(opt_ym_temp,n=1,order_by=sp))
-
-symbiosis_tbl <- read_csv("~/Science/lgm_foram_census/fg/foram_sp_db.csv") %>%
-    mutate(sp = map_vec(Name, species_abbrev))  %>% select(sp, Symbiosis, Spinose)
-
-niche_correlation <- merge(niche_correlation,symbiosis_tbl, by="sp")
-
-## linear regression model
-lm(data=niche_correlation, delta_pe ~ delta_temp) %>% summary()
-saveRDS(niche_correlation, "data/RY_realaysis.RDS")
-
-## Plot Fig. S8
-##### plot time series, bin -> age, pe -> optimal temperature
-niche_hab %>% 
-  ggplot() + geom_line(aes(x=bin,y=pe,color=sp)) +
-  facet_wrap(~reorder(sp, pe)) + 
-  geom_line(aes(x=bin,y=opt_ym_temp)) +
-  theme_bw()+
-  theme(legend.position = "none") +
-  labs(x="Age (ka)", y="Species optimal temperature  (°C)")+
-  theme(strip.background = element_blank(),
-        strip.text = element_text(face = "italic"))
-
-ggsave("output/figs8.png", dpi=400, width = 7, height = 5)
-
+## save as csv
+write_csv(niche_hab, "data/niche_hab.csv")
