@@ -3,6 +3,8 @@
 library(tidyverse)
 niche_data <- read_csv("data/niche_hab.csv")
 
+niche_data <- niche_data %>% filter(n > 15)
+
 ## get only 4 ka and 20 ka
 lgm_niche <- niche_data %>% filter(bin %in% c(4, 20))
 

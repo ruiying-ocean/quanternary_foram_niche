@@ -1,27 +1,5 @@
 library(tidyverse)
-library(ggpubr)
-library(showtext)
-library(broom)
-
-## change species name
-## Add a abbreviation column
-species_abbrev <- function(full_name, sep_string = ". ") {
-  name_parts <- str_split(full_name, " ")[[1]]
-  genus_name <- name_parts[1]
-  species_name <- name_parts[2]
-  
-  if (length(name_parts) > 2) {
-    subspecies_name <- name_parts[3]
-    genus_abbrev <- str_sub(genus_name, 1, 1)
-    abbrev <- paste(genus_abbrev, species_name, sep = sep_string)
-    abbrev <- paste(abbrev, subspecies_name, sep=" ")
-  } else {
-    genus_abbrev <- str_sub(genus_name, 1, 1)
-    abbrev <- paste(genus_abbrev, species_name, sep = sep_string)
-  }
-  
-  return(abbrev)
-}
+source('code/sp_info.R')
 
 ## instead of calculate global temperature change
 ## I subset the data by latitudinal bands
@@ -167,6 +145,38 @@ niche_hab <- niche_hab %>% left_join(sp_lat, by="sp")
 ## opt_ym_temp is the habitat temperature for the species
 niche_hab <- niche_hab %>% rowwise() %>%
   mutate(opt_ym_temp = subset_mat(age = bin,  depth = temp_ym_hab,lat = hab_lat))
+
+## calculate the change of temperature and foram's optimal tempeature
+## only get the nearest time slice (smallest bin = 8 ka)
+delta_temp <- rep(NA, nrow(niche_hab))
+delta_pe <- rep(NA, nrow(niche_hab))
+
+for (i in 1:nrow(niche_hab)) {
+  sp_i <- niche_hab$sp[i]
+  bin_i <- niche_hab$bin[i]
+  temp_i <- niche_hab$opt_ym_temp[i]
+  pe_i <- niche_hab$pe[i]
+  
+  ## get the same species
+  sub_df <- niche_hab %>%
+    filter(sp == sp_i)
+
+  ## only get the nearest time slice (smallest bin = 8 ka)
+  sub_df <- sub_df %>% arrange(bin) %>%
+    filter((bin == bin_i + 8))
+ 
+  if (nrow(sub_df) == 0) {
+    print('No nearest time slice found')
+  } else {
+    delta_temp[i] <- sub_df$opt_ym_temp - temp_i
+    delta_pe[i] <- sub_df$pe - pe_i
+    }
+}
+
+
+## combine delta data
+## containing 135 NAs: 1643 -> 1,508
+niche_hab <- niche_hab %>% add_column(delta_temp = delta_temp, delta_pe = delta_pe)
 
 ## save as csv
 write_csv(niche_hab, "data/niche_hab.csv")
