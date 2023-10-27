@@ -1,7 +1,7 @@
 ## This script plots Fig. S9 of Ying et al. (2023)
 
 library(tidyverse)
-niche_data <- readRDS("data/RY_realaysis.RDS")
+niche_data <- read_csv("data/niche_hab.csv")
 
 ## get only 4 ka and 20 ka
 lgm_niche <- niche_data %>% filter(bin %in% c(4, 20))
@@ -17,6 +17,7 @@ lgm_niche <- lgm_niche %>% group_by(sp) %>%
 
 ## calculate the optimal temperature difference between Holocene and LGM
 lgm_niche <- lgm_niche %>%
+    arrange(sp, bin) %>%
   group_by(sp) %>%
   mutate(hol_minus_lgm = lag(pe,n=1,order_by=sp)-pe)%>%
   ungroup()
@@ -28,7 +29,7 @@ p <- lgm_niche %>%  ggplot(aes(x=bin)) +
   geom_point(aes(y = pe, fill = bin), size = 3, shape=23) +
   labs(x = "", y = "Temperature (°C)") +
   theme_bw() +
-  facet_wrap(~sp, nrow=2)+
+  facet_wrap(~sp, nrow=4)+
   theme(legend.position = "none")
 
 ## add pe difference in each subplot
@@ -38,4 +39,4 @@ p <- p + geom_text(data = lgm_niche %>% distinct(sp, hol_minus_lgm) %>% drop_na(
                   size = 1, vjust = 0))
 
 ## save fig
-ggsave("output/lgm_niche.png", p, width = 8, height = 5, units = "in", dpi = 300)
+ggsave("output/figs9.png", p, width = 8, height = 8, units = "in", dpi = 300)
