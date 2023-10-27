@@ -4,23 +4,29 @@ library(ggpubr)
 ## load in the data
 df <- read_csv("data/niche_hab.csv")
 
-## linear regression plot (Fig. 2)
-df %>%filter(n>15) %>% ggscatter( x = "delta_temp", y = "delta_pe",
-                                        fill = "bin", shape = 21, size = 4,
-                                        add = "reg.line",
-                                        add.params = list(color = "black", fill = "lightgray"),
-                                        conf.int = TRUE,
-                                        cor.coef = TRUE,
-                                        cor.coeff.args = list(method = "pearson", label.x = -2, label.sep = "\n"),
-                                        xlab = "∆ Habitat ocean temperature (°C)", ylab = "∆ Foraminiferal optimal temperature (°C)")
+## --------------------------------------
+## Plot timeseris of optimal temperatures
+## --------------------------------------
 
-fig2 <- fig2 +  scale_fill_viridis_b(name = "Age (ka)") +
-  theme(legend.position = "right")
+## Plot Fig. S8
+##### plot time series, bin -> age, pe -> optimal temperature
+df %>% 
+  ggplot() + geom_line(aes(x=bin,y=pe,color=sp)) +
+  facet_wrap(~reorder(sp, pe)) + 
+  geom_line(aes(x=bin,y=opt_ym_temp)) +
+  theme_bw()+
+  theme(legend.position = "none") +
+  labs(x="Age (ka)", y="Species optimal temperature  (°C)")+
+  theme(strip.background = element_blank(),
+        strip.text = element_text(face = "italic"))
 
-fig2 %>% ggsave("output/fig2.png",., dpi=400, width = 6, height = 4)
+ggsave("output/figs8.png", dpi=400, width = 7, height = 5)
 
-
+## --------------------------------------
 ## Diagnose the effect of minimum number of samples
+## on linear regression result
+## --------------------------------------
+
 thresholds <- seq(0, 30, 1)
 p_values <- c()
 sample_n <- c()
@@ -63,22 +69,54 @@ figs9 <- figs9 + theme(axis.text.y.right = element_text(color = "#00bfc4"),
 
 figs9 %>% ggsave("output/figs9.png", dpi=400, width = 6, height = 4)
 
-## Plot Fig. S8
-##### plot time series, bin -> age, pe -> optimal temperature
-# niche_hab %>% 
-#   ggplot() + geom_line(aes(x=bin,y=pe,color=sp)) +
-#   facet_wrap(~reorder(sp, pe)) + 
-#   geom_line(aes(x=bin,y=opt_ym_temp)) +
-#   theme_bw()+
-#   theme(legend.position = "none") +
-#   labs(x="Age (ka)", y="Species optimal temperature  (°C)")+
-#   theme(strip.background = element_blank(),
-#         strip.text = element_text(face = "italic"))
-# 
-# ggsave("output/figs8.png", dpi=400, width = 7, height = 5)
+## --------------------------------------
+## Final linear regression plot (Fig. 2)
+## --------------------------------------
 
+## eliminate the data with less than 15 samples
+## although this does not affect the significance of the linear regression
+## see next code section
+df_final <- df %>%filter(n>15)
 
+lm(df_final$delta_pe ~ df_final$delta_temp) %>% summary() ## slope: 1.1
 
-## conbime the two dataframes
-df_ecogroup <- df %>% left_join(trait_info,by='sp',relationship = "many-to-many")
+## bootstrapped linear regression slope
+# helper function to return lm coefficients as a list
+lm_coeffs <- function(x, y) {
+  coeffs = as.list(coefficients(lm(y~x)))
+  names(coeffs) = c('i', "s")
+  return(coeffs)
+}
 
+## generate bootstrap samples of slope ('s') and intercept ('i')
+library(data.table)
+nboot <- 1000
+mtboot <- lapply(seq_len(nboot), function(i) {
+  sampled_data <- df_final[sample(nrow(df_final), replace = TRUE), ]
+  lm_coeffs(sampled_data$delta_temp, sampled_data$delta_pe)
+})
+mtboot <- rbindlist(mtboot)
+
+## confidence interval of slope based on bootstrapped samples
+quantile(mtboot$s, c(0.025, 0.975))
+
+## plot the raw data
+fig2 <- df_final %>%
+    ggscatter( x = "delta_temp", y = "delta_pe",
+              fill = "bin",
+              shape = 21, size = 4,
+              conf.int = FALSE,
+              cor.coef = TRUE,
+              cor.coeff.args = list(method = "pearson", label.x = -2, label.sep = "\n"), xlab = "∆ Habitat temperature (°C)", ylab = "∆ Foraminiferal optimal temperature (°C)")
+
+## plot the bootstrapped linear regression result
+fig2 <- fig2 + geom_abline(aes(intercept=i, slope=s), data = mtboot, size=0.3, color='grey', alpha=0.05) + geom_smooth(method = "lm", se = FALSE, color = "black", size = 1.2)
+
+fig2 <- fig2 +  scale_fill_viridis_b(name = "Age (ka)") +
+    theme(legend.position = "right")
+
+fig2 %>% ggsave("output/fig2.png",., dpi=400, width = 6, height = 4)
+
+## --------------------------------------
+## Use trait to explain the linear regression result
+## --------------------------------------
