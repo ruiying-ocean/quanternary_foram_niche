@@ -76,7 +76,10 @@ figs9 %>% ggsave("output/figs9.png", dpi=400, width = 6, height = 4)
 ## eliminate the data with less than 15 samples
 ## although this does not affect the significance of the linear regression
 ## see next code section
-df_final <- df %>%filter(n>15)
+df_final <- df %>% filter(n>15)
+
+## get maximum delta_pe
+df_final %>% summary() ## delta_pe: (-12.5, 11.1); bin: (4, 700)
 
 lm(df_final$delta_pe ~ df_final$delta_temp) %>% summary() ## slope: 1.1
 
@@ -98,7 +101,7 @@ mtboot <- lapply(seq_len(nboot), function(i) {
 mtboot <- rbindlist(mtboot)
 
 ## confidence interval of slope based on bootstrapped samples
-quantile(mtboot$s, c(0.025, 0.975))
+quantile(mtboot$s, c(0.025, 0.975)) ## (0.48, 1.70)
 
 ## plot the raw data
 fig2 <- df_final %>%
@@ -107,13 +110,19 @@ fig2 <- df_final %>%
               shape = 21, size = 4,
               conf.int = FALSE,
               cor.coef = TRUE,
-              cor.coeff.args = list(method = "pearson", label.x = -2, label.sep = "\n"), xlab = "∆ Habitat temperature (°C)", ylab = "∆ Foraminiferal optimal temperature (°C)")
+              cor.coeff.args = list(method = "pearson", label.x = -2, label.sep = "\n"),
+              xlab = "∆ species habitat temperature (°C)", ylab = "∆ species optimal temperature (°C)")
 
 ## plot the bootstrapped linear regression result
-fig2 <- fig2 + geom_abline(aes(intercept=i, slope=s), data = mtboot, size=0.3, color='grey', alpha=0.05) + geom_smooth(method = "lm", se = FALSE, color = "black", size = 1.2)
+fig2 <- fig2 +
+    geom_abline(aes(intercept=i, slope=s), data = mtboot, size=0.1, color='grey', alpha=0.1) +
+    geom_smooth(method = "lm", se = FALSE, color = "black", size = 1.2)
 
 fig2 <- fig2 +  scale_fill_viridis_b(name = "Age (ka)") +
     theme(legend.position = "right")
+
+## use Helvetica font
+fig2 <- fig2 + theme(text = element_text(family = "Helvetica"))
 
 fig2 %>% ggsave("output/fig2.png",., dpi=400, width = 6, height = 4)
 
