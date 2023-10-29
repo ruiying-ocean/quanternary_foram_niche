@@ -1,2 +1,3 @@
 /data/gcm_annual_mean/*.nc
 /data/gcm_annual_mean/*.tif
+.Rproj.user
