@@ -101,7 +101,7 @@ mtboot <- lapply(seq_len(nboot), function(i) {
 mtboot <- rbindlist(mtboot)
 
 ## confidence interval of slope based on bootstrapped samples
-quantile(mtboot$s, c(0.025, 0.975)) ## (0.48, 1.70)
+quantile(mtboot$s, c(0.025, 0.975)) ## (0.5, 1.7)
 
 ## plot the raw data
 fig2 <- df_final %>%
@@ -122,7 +122,31 @@ fig2 <- fig2 +  scale_fill_viridis_b(name = "Age (ka)") +
     theme(legend.position = "right")
 
 ## use Helvetica font
-fig2 <- fig2 + theme(text = element_text(family = "Helvetica"))
+theme_publication <- function(base_size = 14, base_family = "helvetica") {
+  library(grid)
+  library(ggthemes)
+  (theme_foundation(base_size = base_size, base_family = base_family)
+  + theme(
+      plot.title = element_text(face = "bold"),
+      text = element_text(),
+      panel.background = element_rect(colour = NA),
+      plot.background = element_rect(colour = NA),
+      panel.border = element_rect(colour = NA),
+      #axis.title = element_text(face = "plain", size = rel(1)),
+      axis.title.y = element_text(angle = 90, vjust = 2),
+      axis.title.x = element_text(vjust = -0.2),
+      axis.text = element_text(),
+      axis.line = element_line(colour = "black"),
+      axis.ticks = element_line(),
+      panel.grid.major = element_line(colour = "#f0f0f0"),
+      panel.grid.minor = element_blank(),
+      legend.key = element_rect(colour = NA),
+      strip.background = element_rect(colour = "#f0f0f0", fill = "#f0f0f0"),
+      strip.text = element_text(face = "plain")
+    ))
+}
+
+fig2 <- fig2 + theme_publication()
 
 fig2 %>% ggsave("output/fig2.png",., dpi=400, width = 6, height = 4)
 
