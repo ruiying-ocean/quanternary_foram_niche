@@ -5,6 +5,46 @@ library(ggpubr)
 df <- read_csv("data/niche_hab.csv")
 
 ## --------------------------------------
+## add symbiont and spine information to species
+## -----------------------------------------------
+source('code/sp_info.R')
+
+## merge the two data frames
+df <- merge(df, trait_info, by = "sp")
+
+## add ecogroup definition
+## if symb
+df <- df %>% mutate(ecogroup = case_when(
+                  Symbiosis == "Yes" & Spinose == "Yes"~ "Symbiont-obligate Spinose",
+                  Symbiosis == "No" & Spinose == "Yes" ~ "Symbiont-barren Spinose",
+                  Symbiosis == "No" & Spinose == "No" ~ "Symbiont-barren Non-spinose",
+                  TRUE ~ "Symbiont-facultative Non-spinose"))
+
+theme_publication <- function(base_size = 14, base_family = "helvetica") {
+  library(grid)
+  library(ggthemes)
+  (theme_foundation(base_size = base_size, base_family = base_family)
+  + theme(
+      plot.title = element_text(face = "bold"),
+      text = element_text(),
+      panel.background = element_rect(colour = NA),
+      plot.background = element_rect(colour = NA),
+      panel.border = element_rect(colour = NA),
+      #axis.title = element_text(face = "plain", size = rel(1)),
+      axis.title.y = element_text(angle = 90, vjust = 2),
+      axis.title.x = element_text(vjust = -0.2),
+      axis.text = element_text(),
+      axis.line = element_line(colour = "black"),
+      axis.ticks = element_line(),
+      panel.grid.major = element_line(colour = "#f0f0f0"),
+      panel.grid.minor = element_blank(),
+      legend.key = element_rect(colour = NA),
+      strip.background = element_rect(colour = "#f0f0f0", fill = "#f0f0f0"),
+      strip.text = element_text(face = "plain")
+    ))
+}
+
+## --------------------------------------
 ## Plot timeseris of optimal temperatures
 ## --------------------------------------
 
@@ -54,9 +94,9 @@ figs9 <- ggplot(df_lm, aes(x=thresholds)) +
   geom_line(aes(y=sample_n/coeff), linewidth=0.8, color='#00bfc4') +
   scale_y_continuous(
     name = "P-value",
-    sec.axis = sec_axis(~.*coeff, name="Sample number")
+    sec.axis = sec_axis(~.*coeff, name="Samples left")
   ) +
-  xlab("Minimum number of samples") +
+  xlab("Sample number thereshold") +
   geom_abline(intercept = 0.05, slope = 0, linetype = "dashed") +
   geom_text(aes(x = 25, y = 0.055, label = "P-value = 0.05")) +
   theme_publication()
@@ -67,7 +107,7 @@ figs9 <- figs9 + theme(axis.text.y.right = element_text(color = "#00bfc4"),
           axis.text.y.left = element_text(color = "#f8766d"),
           axis.title.y.left = element_text(color = "#f8766d"))
 
-figs9 %>% ggsave("output/figs9.png", dpi=400, width = 6, height = 4)
+ggsave("output/figs9.png", figs9, dpi=400, width = 6, height = 4)
 
 ## --------------------------------------
 ## Final linear regression plot (Fig. 2)
@@ -121,30 +161,6 @@ fig2 <- fig2 +
 fig2 <- fig2 +  scale_fill_viridis_b(name = "Age (ka)") +
     theme(legend.position = "right")
 
-## use Helvetica font
-theme_publication <- function(base_size = 14, base_family = "helvetica") {
-  library(grid)
-  library(ggthemes)
-  (theme_foundation(base_size = base_size, base_family = base_family)
-  + theme(
-      plot.title = element_text(face = "bold"),
-      text = element_text(),
-      panel.background = element_rect(colour = NA),
-      plot.background = element_rect(colour = NA),
-      panel.border = element_rect(colour = NA),
-      #axis.title = element_text(face = "plain", size = rel(1)),
-      axis.title.y = element_text(angle = 90, vjust = 2),
-      axis.title.x = element_text(vjust = -0.2),
-      axis.text = element_text(),
-      axis.line = element_line(colour = "black"),
-      axis.ticks = element_line(),
-      panel.grid.major = element_line(colour = "#f0f0f0"),
-      panel.grid.minor = element_blank(),
-      legend.key = element_rect(colour = NA),
-      strip.background = element_rect(colour = "#f0f0f0", fill = "#f0f0f0"),
-      strip.text = element_text(face = "plain")
-    ))
-}
 
 fig2 <- fig2 + theme_publication()
 
