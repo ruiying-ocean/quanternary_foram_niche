@@ -18,7 +18,7 @@ species_abbrev <- function(full_name, sep_string = ". ") {
   return(abbrev)
 }
 
-foram_sp_db <- read_csv("https://raw.githubusercontent.com/ruiying-ocean/lgm_foram_census/main/fg/foram_sp_db.csv")
+foram_sp_db <- read_csv("https://raw.githubusercontent.com/ruiying-ocean/lgm_foram_census/main/fg/foram_taxonomy.csv")
 
 trait_info <-foram_sp_db %>%
-   mutate(sp = map_vec(Name, species_abbrev)) %>% select(sp, Symbiosis, Spinose)
+   mutate(sp = map_vec(`Species name`, species_abbrev)) %>% select(sp, Symbiosis, Spine)

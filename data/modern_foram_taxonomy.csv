@@ -1,0 +1,51 @@
+No,Speceis name,Author,Symbiosis,Algal type,Symbiont evidence,Spine,Spine evidence,Porosity
+1,Beella digitata,"Brady, 1879",symbiont-barren,,"very light _13C, sub-thermocline",spinose,"Schiebel & Hemleben, 2017",macroperforate
+2,Berggrenia pumilio,"Parker, 1962",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",
+3,Bolivina variabilis,"Williamson, 1858",undetermined,,,undetermined,,
+4,Candeina nitida,"d’Orbigny, 1839",symbiont-facultative,chrysophyte,Takagi et al. 2019 Cluster 2; Table 1,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+5,Dentigloborotalia anfracta,"Parker, 1967",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+6,Globigerina bulloides,"d’Orbigny, 1826",symbiont-barren,,Takagi et al. 2019 Cluster 4,spinose,,
+7,Globigerina falconensis,"Blow, 1959",symbiont-obligate,,mikrotax,spinose,,
+8,Globigerinella adamsi,"Banner and Blow, 1959",symbiont-barren,,Takagi et al. 2019 Cluster 4,spinose,,
+9,Globigerinella calida,"Parker, 1962",symbiont-obligate,,Takagi et al. 2019 Cluster 2; Table 1,spinose,,
+10,Globigerinella radians,"Egger, 1893",undetermined,,,spinose,mikrotax,macroperforate
+11,Globigerinella siphonifera,"d’Orbigny, 1839",symbiont-obligate,Type I: dinoflagellate; Type 2: pelagophyte,Takagi et al. 2019 Cluster 2,spinose,,
+12,Globigerinita glutinata,"Egger, 1893",symbiont-facultative,,Takagi et al. 2019 Cluster 2; Table 1,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+13,Globigerinita minuta,"Natland, 1938",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+14,Globigerinita uvula,"Ehrenberg, 1862",symbiont-bearing,,Takagi et al. 2019 Cluster 2,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+15,Globigerinoides conglobatus,"Brady, 1879",symbiont-obligate, dinoflagellate,Takagi et al. 2019 Cluster 1,spinose,,
+16,Globigerinoides elongatus,"d’Orbigny, 1826",undetermined,,,spinose,mikrotax,macroperforate
+17,Globigerinoides ruber albus,"Morard et al., 2019",symbiont-obligate, dinoflagellate,Takagi et al. 2019 Cluster 2,spinose,,
+18,Globigerinoides ruber ruber,"d’Orbigny, 1839",symbiont-obligate, dinoflagellate,Takagi et al. 2019 Cluster 2,spinose,"Schiebel & Hemleben, 2017",
+19,Globigerinoides tenellus,"Parker, 1958",symbiont-bearing, dinoflagellate,Takagi et al. 2019 Cluster 2,spinose,,
+20,Globoquadrina conglomerata,"Schwager, 1866",undetermined,,,non-spinose,mikrotax,
+21,Globorotalia cavernula,"Bé, 1967",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+22,Globorotalia crassaformis,"Galloway and Wissler, 1927",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+23,Globorotalia cultrata,"d’Orbigny, 1839",symbiont-facultative,,Takagi et al. 2019 Cluster 2,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+24,Globorotalia eastropacia,"Boltovskoy, 1974",undetermined,,,non-spinose,mikrotax,macroperforate
+25,Globorotalia hirsuta,"d’Orbigny, 1839",symbiont-barren,,,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+26,Globorotalia inflata,"d’Orbigny, 1839",symbiont-facultative,,Takagi et al. 2019 Cluster 3; Table 1,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+27,Globorotalia scitula,"Brady, 1882",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+28,Globorotalia truncatulinoides,"d’Orbigny, 1839",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+29,Globorotalia tumida,"Brady, 1877",symbiont-barren,,"light _13C, thermocline",non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+30,Globorotalia ungulata,"Bermúdez, 1961",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+31,Globorotaloides hexagonus,"Natland, 1938",symbiont-barren,,"low _13C,  living below the thermocline and down to at least 800 m water depth",non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+32,Globorotaloides oveyi,"Buckley, 1973",undetermined,,,undetermined,,
+33,Globoturborotalita rubescens,"Hofker, 1956",symbiont-bearing,,Takagi et al. 2019 Cluster 2,spinose,mikrotax,
+34,Hastigerina pelagica,"d'Orbigny, 1839",symbiont-barren,,Takagi et al. 2019 Cluster 4,spinose,"Schiebel & Hemleben, 2017",monolamellar
+35,Hastigerinella digitata,"Rhumbler, 1911",symbiont-barren,,Takagi et al. 2019 Cluster 4,spinose,"Schiebel & Hemleben, 2017",monolamellar
+36,Neogallitellia vivans,"Cushman, 1934",undetermined,,,undetermined,,
+37,Neogloboquadrina dutertrei,"d’Orbigny, 1839",symbiont-facultative,pelagophyte ,Takagi et al. 2019 Cluster 2; Table 1,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+38,Neogloboquadrina incompta,"Cifelli, 1961",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+39,Neogloboquadrina pachyderma,"Ehrenberg, 1862",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+40,Orbulina universa,"d’Orbigny, 1839",symbiont-obligate, dinoflagellate,Takagi et al. 2019 Cluster 1,spinose,"Schiebel & Hemleben, 2017",
+41,Orcadia riedeli,"Rögl and Bolli, 1973",undetermined,,,spinose,mikrotax,
+42,Pulleniatina obliquiloculata,"Parker and Jones, 1865",symbiont-facultative,,Takagi et al. 2019 Cluster 3; Table 1,non-spinose,"Schiebel & Hemleben, 2017",macroperforate
+43,Sphaeroidinella dehiscens,"Parker and Jones, 1865",symbiont-bearing,,Takagi et al. 2019 Cluster 2,spinose,"Schiebel & Hemleben, 2017",
+44,Tenuitellita fleisheri,"Li, 1987",symbiont-barren,,Takagi et al. 2019 Cluster 4,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+45,Tenuitellita iota,"Parker, 1962",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+46,Tenuitellita parkerae,"Brönnimann and Resig, 1971",undetermined,,,non-spinose,"Schiebel & Hemleben, 2017",microperforate
+47,Trilobatus sacculifer,"Brady, 1877",symbiont-obligate, dinoflagellate,Takagi et al. 2019 Cluster 1,spinose,"Schiebel & Hemleben, 2017",
+48,Turborotalita clarkei,"Rögl and Bolli, 1973",symbiont-barren,,mikrotax,spinose,mikrotax,
+49,Turborotalita humilis,"Brady, 1884",symbiont-facultative,,Takagi et al. 2019 Cluster 3; Table 1,spinose,"Schiebel & Hemleben, 2017",
+50,Turborotalita quinqueloba,"Natland, 1938",symbiont-barren,,Takagi et al. 2019 Cluster 4,spinose,"Schiebel & Hemleben, 2017",

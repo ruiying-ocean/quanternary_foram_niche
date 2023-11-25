@@ -4,21 +4,24 @@ library(ggpubr)
 ## load in the data
 df <- read_csv("data/niche_hab.csv")
 
+## use consistent species name
+df <- df %>% mutate(sp=recode(sp,
+                              "G. menardii"="G. cultrata",
+                              "G. tenella"="G. tenellus",
+                              "G. ruber"="G. ruber total"
+                              ))
+
 ## --------------------------------------
 ## add symbiont and spine information to species
 ## -----------------------------------------------
 source('code/sp_info.R')
 
 ## merge the two data frames
-df <- merge(df, trait_info, by = "sp")
+df <- left_join(df, trait_info, by = "sp")
 
 ## add ecogroup definition
 ## if symb
-df <- df %>% mutate(ecogroup = case_when(
-                  Symbiosis == "Yes" & Spinose == "Yes"~ "Symbiont-obligate Spinose",
-                  Symbiosis == "No" & Spinose == "Yes" ~ "Symbiont-barren Spinose",
-                  Symbiosis == "No" & Spinose == "No" ~ "Symbiont-barren Non-spinose",
-                  TRUE ~ "Symbiont-facultative Non-spinose"))
+df <- df %>% mutate(ecogroup = paste(Symbiosis, Spine, sep = " "))
 
 theme_publication <- function(base_size = 14, base_family = "helvetica") {
   library(grid)
@@ -60,7 +63,7 @@ df %>%
   theme(strip.background = element_blank(),
         strip.text = element_text(face = "italic"))
 
-ggsave("output/figs8.png", dpi=400, width = 7, height = 5)
+ggsave("output/ext_fig5.png", dpi=400, width = 7, height = 5)
 
 ## --------------------------------------
 ## Diagnose the effect of minimum number of samples
@@ -107,7 +110,7 @@ figs9 <- figs9 + theme(axis.text.y.right = element_text(color = "#00bfc4"),
           axis.text.y.left = element_text(color = "#f8766d"),
           axis.title.y.left = element_text(color = "#f8766d"))
 
-ggsave("output/figs9.png", figs9, dpi=400, width = 6, height = 4)
+ggsave("output/figs2.png", figs9, dpi=400, width = 6, height = 4)
 
 ## --------------------------------------
 ## Final linear regression plot (Fig. 2)
@@ -117,6 +120,10 @@ ggsave("output/figs9.png", figs9, dpi=400, width = 6, height = 4)
 ## although this does not affect the significance of the linear regression
 ## see next code section
 df_final <- df %>% filter(n>15)
+
+## anova analysis
+df_final %>% aov(delta_pe ~ Spine +Symbiosis, data = .) %>% summary()
+
 
 ## get maximum delta_pe
 df_final %>% summary() ## delta_pe: (-12.5, 11.1); bin: (4, 700)
@@ -133,6 +140,7 @@ lm_coeffs <- function(x, y) {
 
 ## generate bootstrap samples of slope ('s') and intercept ('i')
 library(data.table)
+set.seed(999999)
 nboot <- 1000
 mtboot <- lapply(seq_len(nboot), function(i) {
   sampled_data <- df_final[sample(nrow(df_final), replace = TRUE), ]
@@ -141,13 +149,13 @@ mtboot <- lapply(seq_len(nboot), function(i) {
 mtboot <- rbindlist(mtboot)
 
 ## confidence interval of slope based on bootstrapped samples
-quantile(mtboot$s, c(0.025, 0.975)) ## (0.5, 1.7)
+quantile(mtboot$s, c(0.025, 0.975)) ## (0.4, 1.7)
 
 ## plot the raw data
 fig2 <- df_final %>%
     ggscatter( x = "delta_temp", y = "delta_pe",
               fill = "bin",
-              shape = 21, size = 4,
+              shape = 21, linewidth = 4,
               conf.int = FALSE,
               cor.coef = TRUE,
               cor.coeff.args = list(method = "pearson", label.x = -2, label.sep = "\n"),
@@ -169,3 +177,16 @@ fig2 %>% ggsave("output/fig2.png",., dpi=400, width = 6, height = 4)
 ## --------------------------------------
 ## Use trait to explain the linear regression result
 ## --------------------------------------
+figs5 <- df_final %>% mutate(ecogroup=paste(Symbiosis, Spine)) %>%
+  ggboxplot(, x='ecogroup',y='delta_pe',fill='ecogroup',palette = "jco",add='jitter')+
+  stat_compare_means(method = "anova",label = "p.signif") +
+  theme_publication(base_size = 12)+
+  theme(legend.position = "right", axis.text.x = element_blank())+
+  ylab(expression(paste("Δ species optimal temperature (°C)"))) +
+  xlab("Ecological group")
+
+## save the figure to svg
+ggsave(file = "output/figs5.svg", dpi = 300, width = 8, height = 5)
+## convert to pdf
+system("inkscape output/figs5.svg --export-pdf=output/figs5.pdf")
+system("rm output/figs5.svg")
