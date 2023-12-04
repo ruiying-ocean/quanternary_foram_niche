@@ -68,7 +68,7 @@ for (min_sample in thresholds) {
 df_lm <- data.frame(thresholds, p_values, sample_n)
 coeff <- 20000
 
-figs9 <- ggplot(df_lm, aes(x=thresholds)) +
+supp_fig5 <- ggplot(df_lm, aes(x=thresholds)) +
   geom_line(aes(y=p_values), linewidth=0.8, color='#f8766d') + 
   geom_line(aes(y=sample_n/coeff), linewidth=0.8, color='#00bfc4') +
   scale_y_continuous(
@@ -81,12 +81,12 @@ figs9 <- ggplot(df_lm, aes(x=thresholds)) +
   theme_publication()
 
 ## change y axis color
-figs9 <- figs9 + theme(axis.text.y.right = element_text(color = "#00bfc4"),
+supp_fig5 <- supp_fig5 + theme(axis.text.y.right = element_text(color = "#00bfc4"),
           axis.title.y.right = element_text(color = "#00bfc4"),
           axis.text.y.left = element_text(color = "#f8766d"),
           axis.title.y.left = element_text(color = "#f8766d"))
 
-ggsave("output/figs2.png", figs9, dpi=400, width = 6, height = 4)
+ggsave("output/supp_fig5.png", supp_fig5, dpi=400, width = 6, height = 4)
 
 ## --------------------------------------
 ## Final linear regression plot (Fig. 2)
