@@ -1,5 +1,4 @@
-library(tidyverse)
-source('code/sp_info.R')
+source('code/lib.R')
 
 ## instead of calculate global temperature change
 ## I subset the data by latitudinal bands

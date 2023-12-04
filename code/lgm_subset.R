@@ -1,7 +1,7 @@
 ## This script plots Fig. S9 of Ying et al. (2023)
 
 library(tidyverse)
-source("code/custom_theme.R")
+source("code/lib.R")
 
 niche_data <- read_csv("data/niche_hab.csv")
 
