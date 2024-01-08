@@ -48,11 +48,20 @@ boot_lm <- function(data, x, y){
   return(mtboot)
 }
 
-plot_lm <- function(data, x, y, label_pos, label_size=4, ...){
-  # Use R2 instead of R
-  p <- ggscatter(data, x = x, y = y, add = "reg.line",...) +
-    stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")), 
-             label.x = label_pos[1], label.y = label_pos[2], size = label_size)
+plot_lm <- function(data, x, y, label_pos, label_size=4, marginal_plot=FALSE, ...){
+  if (marginal_plot) {
+    # Use R2 instead of R
+    p <- ggscatter(data, x = x, y = y, add = "reg.line",...) +
+      stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")), 
+               label.x = label_pos[1], label.y = label_pos[2], size = label_size)
+  } else {
+    ## use ggscatterhist to plot the scatter plot
+    p <- ggscatterhist(data, x = x, y = y, add = "reg.line",
+                       margin.params = list(fill = "lightgray"),...) +
+      stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")), 
+               label.x = label_pos[1], label.y = label_pos[2], size = label_size)
+  }
+  
 
   ## plot the bootstrapped regression results
   mtboot <- boot_lm(data, x, y)
