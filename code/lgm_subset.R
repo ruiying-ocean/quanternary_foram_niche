@@ -40,24 +40,25 @@ lgm_niche <- lgm_niche %>%
 
 ## plot Holocene and LGM and their error bar (crossbar) using ggpubr
 p <- lgm_niche %>% ggplot(aes(x = bin)) +
-  geom_crossbar(aes(y = m, ymin = m - sd, ymax = m + sd, fill = bin), alpha = 0.3, width = 0.2) +
-  geom_point(aes(y = pe, fill = bin), shape = 23) +
+  geom_crossbar(aes(y = m, ymin = m - sd, ymax = m + sd, fill = bin), alpha = 0.3, width = 0.2, lwd=0.3) +
+  geom_point(aes(y = pe, fill = bin), shape = 23, lwd=0.3) +
   labs(x = "", y = "Species temperature distribution (°C)") +
   facet_wrap(~sp, nrow = 3)
 
-## label pe difference in each subplot
+# label pe difference in each subplot
 p <- p + geom_text(
+  size=5,
   data = lgm_niche %>% distinct(sp, hol_minus_lgm) %>% drop_na(),
   aes(
     x = 1.5, y = -1,
-    label = paste0("Δopt=", round(hol_minus_lgm, 1), "°C"),
-    size = .5, vjust = 0
+    label = paste0("ΔTopt=", round(hol_minus_lgm, 1), "°C"),
+    vjust = 0,
   )
 )
 
-p <- p + theme_publication() +
+p <- p + theme_publication(7) +
   scale_fill_manual(values = c("#0C4876", "#699c79")) +
   theme(legend.position = "none")
 
 ## save fig
-ggsave("output/ext_fig6.png", p, width = 8, height = 6, units = "in", dpi = 300)
+ggsave("output/ext_fig6.jpg", p, width = 10, height = 8, units = "cm", dpi = 300)
