@@ -40,25 +40,48 @@ lgm_niche <- lgm_niche %>%
 
 ## plot Holocene and LGM and their error bar (crossbar) using ggpubr
 p <- lgm_niche %>% ggplot(aes(x = bin)) +
-  geom_crossbar(aes(y = m, ymin = m - sd, ymax = m + sd, fill = bin), alpha = 0.3, width = 0.2, lwd=0.3) +
-  geom_point(aes(y = pe, fill = bin), shape = 23, lwd=0.3) +
+  geom_point(aes(y = pe, fill = bin), shape = 23) +
   labs(x = "", y = "Species temperature distribution (°C)") +
   facet_wrap(~sp, nrow = 3)
 
 # label pe difference in each subplot
 p <- p + geom_text(
-  size=5,
+  size=1.8,
   data = lgm_niche %>% distinct(sp, hol_minus_lgm) %>% drop_na(),
   aes(
-    x = 1.5, y = -1,
+    x = .5, y = -2.7,hjust = 0,
     label = paste0("ΔTopt=", round(hol_minus_lgm, 1), "°C"),
-    vjust = 0,
+  )
+)
+
+## add "n=X" to each subplot (using column n1)
+p <- p + geom_text(
+  data = lgm_niche %>% filter(bin2==12),
+  size=1.8,
+  hjust = 0,
+  aes(
+  x=.5, y=0,
+    label = paste0("n(LGM)=", n1),
+  )
+)
+## PI
+p <- p + geom_text(
+  data = lgm_niche %>% filter(is.na(bin2)),
+  size=1.8,
+  hjust = 0,
+  aes(
+    x=.5, y=2.7,
+    label = paste0("n(PI)=", n1),
   )
 )
 
 p <- p + theme_publication(7) +
   scale_fill_manual(values = c("#0C4876", "#699c79")) +
   theme(legend.position = "none")
+
+## italic species name (i.e., the facet label)
+#p <- p + theme(strip.text = element_text(face = "italic"))
+
 
 ## save fig
 ggsave("output/ext_fig6.jpg", p, width = 10, height = 8, units = "cm", dpi = 300)
