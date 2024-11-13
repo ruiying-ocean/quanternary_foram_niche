@@ -4,8 +4,7 @@
 * About
 This repository is to reanalyse Antell et al. (2021) data, mostly foraminiferal optimal temperature. The reanalysed data is used to demonstrates that foraminifera optimal temperature is changing throughout glacial-interglaical cycle, and such changing is weakly but significanlty correlated to temperature change.
 
-+ Publication:
-Ying, R., Monteiro, F. M., Wilson, J. D., Ödalen M., and Schmidt, D. N.: Past foraminiferal acclimatization capacity is limited during future warming, Nature, https://doi.org/10.1038/s41586-024-08029-0
++ Publication: Ying, R., Monteiro, F.M., Wilson, J.D. et al. Past foraminiferal acclimatization capacity is limited during future warming. Nature (2024). https://doi.org/10.1038/s41586-024-08029-0
 
 
 * Original study
